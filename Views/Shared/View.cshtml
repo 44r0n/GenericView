@@ -1,0 +1,44 @@
+@model List<object>
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+<table id="genericTable" class="table table-hover">
+    <thead>
+        <tr>
+            @{ 
+                foreach(string property in ViewBag.Properties)
+                { 
+                    <th>@property</th>
+                }
+                if (ViewBag.Actions != null)
+                {
+                    <th>Actions</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            for(int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                @{
+                    foreach (string property in ViewBag.Properties)
+                    {
+                        <td>@Model[i].GetType().GetProperty(property).GetValue(Model[i])</td>
+                    }
+                    if (ViewBag.Actions != null)
+                    {
+                        <td>@ViewBag.Actions[i]</td>
+                    }
+                }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
